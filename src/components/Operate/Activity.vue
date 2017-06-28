@@ -28,17 +28,18 @@
               width="80">
             </el-table-column>
             <el-table-column
+              prop="desc"
               label="名称"
               sortable
               width="240">
             </el-table-column>
             <el-table-column
-              prop="name"
+              prop="image"
               label="封面"
               width="80">
             </el-table-column>
             <el-table-column
-              prop="address"
+              prop="category_ids"
               label="分类"
               width="80">
             </el-table-column>
@@ -47,28 +48,34 @@
               width="80">
             </el-table-column>
             <el-table-column
+              prop="target_amount"
               label="目标数量"
               sortable
               width="120">
             </el-table-column>
             <el-table-column
+              prop="current_term"
               label="当前期数"
               width="100">
             </el-table-column>
             <el-table-column
+              prop="status"
               label="状态"
               width="100">
             </el-table-column>
             <el-table-column
+              prop="weight"
               label="权重"
               sortable
               width="100">
             </el-table-column>
             <el-table-column
+              prop="updated_at"
               label="最后更新时间"
               width="180">
             </el-table-column>
             <el-table-column
+              prop="start_at"
               label="开始时间"
               width="180">
             </el-table-column>
@@ -84,11 +91,11 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
+          :current-page="page"
           :page-sizes="[10, 20, 30, 40]"
-          :page-size="sizePage"
+          :page-size="size"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="40">
+          :total="total">
         </el-pagination>
       </el-col>
     </section>
@@ -99,11 +106,16 @@
   export default {
     data () {
       return {
-        url: '../../../static/vuetable.json',
-        sizePage: 20,
-        currentPage: 1,
+        url: 'http://54.169.136.207/admin/activity/template/?status=1&%24page=1&%24size=15&%24orderby=-updated_at&_=1498614582296',
+        headers: {
+          'AUTH-TOKEN': 'f3b2b3ea-25ba-40d0-80fd-fd4984e333ac',
+          'AUTH-USER': 20
+        },
+        size: 15,
+        page: 1,
         tableData3: [],
-        multipleSelection: []
+        multipleSelection: [],
+        total: 0
       }
     },
     created () {
@@ -143,8 +155,10 @@
       },
       getData () {
         let self = this
-        self.$axios.get(self.url, {page: self.currentPage}).then((res) => {
+        self.$axios.get(self.url, {page: self.currentPage, headers: self.headers}).then((res) => {
+          console.log(res)
           self.tableData3 = res.data.list
+          self.total = res.data.total_count
         })
       }
     }
