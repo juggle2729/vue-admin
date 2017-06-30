@@ -1,7 +1,7 @@
 <template>
     <section class="activity">
       <el-col :span="21">
-        <div class="header">
+        <div class="header1">
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="活动模块管理" style="float: left"></el-form-item>
             <router-link to="/activity/add">
@@ -102,20 +102,14 @@
 </template>
 
 <script>
-
+  import ContentAPI from 'api/content'
+  import {ERR_OK} from 'api/config'
   export default {
     data () {
       return {
-        url: 'http://54.169.136.207/admin/activity/template/?status=1&%24page=1&%24size=15&%24orderby=-updated_at&_=1498614582296',
-        headers: {
-          'AUTH-TOKEN': 'f3b2b3ea-25ba-40d0-80fd-fd4984e333ac',
-          'AUTH-USER': 20
-        },
-        size: 15,
-        page: 1,
         tableData3: [],
         multipleSelection: [],
-        total: 0
+        total:total
       }
     },
     created () {
@@ -155,18 +149,19 @@
       },
       getData () {
         let self = this
-        self.$axios.get(self.url, {page: self.currentPage, headers: self.headers}).then((res) => {
-          console.log(res)
-          self.tableData3 = res.data.list
-          self.total = res.data.total_count
-        })
+        ContentAPI.getActivityTable().then(res) => {
+            if(res.status === ERR_OK){
+                self.tableData3 = res.data.list
+                self.total = res.data.total_count
+            }
+        }
       }
     }
   }
 </script>
 
 <style>
-  .header{
+  .header1{
     padding: 10px 20px;
     min-height: 30px;
     border-bottom: 1px solid #e0e0e0;

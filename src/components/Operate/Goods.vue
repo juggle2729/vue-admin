@@ -1,7 +1,7 @@
 <template>
   <section class="Activity">
     <el-col :span="21">
-      <div class="header">
+      <div class="header1">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="商品管理" style="float: left"></el-form-item>
           <el-form-item label="新建商品" style="float: right" @click="newtemplate"></el-form-item>
@@ -148,7 +148,7 @@
 </script>
 
 <style>
-  .header{
+  .header1{
     padding: 10px 20px;
     min-height: 30px;
     border-bottom: 1px solid #e0e0e0;
