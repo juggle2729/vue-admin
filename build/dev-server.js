@@ -10,9 +10,8 @@ var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
-var webpackConfig = process.env.NODE_ENV === 'testing'
-  ? require('./webpack.prod.conf')
-  : require('./webpack.dev.conf')
+var webpackConfig = require('./webpack.dev.conf')
+var axios = require('axios')
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -23,6 +22,31 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+
+var apiRoutes = express.Router()
+
+apiRoutes.get('/getActivity', function (req, res) {
+  var url = 'http://54.169.136.207/admin/activity/template/'
+  axios.get(url, {
+    headers: {
+      referer: 'http://54.169.136.207/',
+      host: '54.169.136.207',
+      'X-AUTH-TOKEN': '59812899-6607-493e-9313-c9c3796a3f95',
+      'X-AUTH-USER': 20,
+      'X-Requested-With': XMLHttpRequest
+    },
+    params: req.query
+  }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+
+
+app.use('/api', apiRoutes)
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {

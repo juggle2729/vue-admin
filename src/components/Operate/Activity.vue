@@ -102,7 +102,7 @@
 </template>
 
 <script>
-  import ContentAPI from 'api/content'
+  import{getActivityTable} from 'api/content'
   import {ERR_OK} from 'api/config'
   export default {
     data () {
@@ -149,12 +149,12 @@
       },
       getData () {
         let self = this
-        ContentAPI.getActivityTable().then(res) => {
+        getActivityTable().then((res) => {
             if(res.status === ERR_OK){
                 self.tableData3 = res.data.list
                 self.total = res.data.total_count
             }
-        }
+        })
       }
     }
   }

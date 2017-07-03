@@ -1,4 +1,4 @@
-import originJsonp from 'src/common/js/jsonp'
+import originJsonp from 'common/js/jsonp'
 
 export default function jsonp (url, data, option) {
   url += (url.indexOf('?') < 0 ? '?' : '&') + param(data)

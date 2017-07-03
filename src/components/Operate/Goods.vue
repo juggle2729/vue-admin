@@ -28,7 +28,7 @@
           <el-table-column
             label="名称"
             sortable
-            width="480">
+            width="380">
           </el-table-column>
           <el-table-column
             prop="name"
@@ -61,7 +61,7 @@
             label="最后更新时间"
             width="180">
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column label="操作" width="180">
             <template scope="scope">
               <el-button
                 size="small"
